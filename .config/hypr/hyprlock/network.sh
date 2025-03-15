@@ -4,6 +4,16 @@
 # Set to "true" to show SSID, "false" to show "Connected"
 #show_ssid=true
 
+truncate_with_ellipsis() {
+	text=$1
+	max_length=$2
+	if [ ${#text} -gt $max_length ]; then
+		echo "${text:0:$((max_length - 3))}..."
+	else
+		echo "$text"
+	fi
+}
+
 # Read the wifi-mode alias from hyprlock.conf
 show_ssid=$(grep -oP '^\$wifi-mode\s*=\s*\K\S+' ~/.config/hypr/hyprlock.conf)
 
@@ -51,9 +61,10 @@ wifi_icon=${wifi_icons[$icon_index]}
 
 # Output based on show_ssid variable
 if [ "$show_ssid" = true ]; then
-    # Show SSID
-    echo "$wifi_icon $ssid"
+    # Truncate the SSID to a maximum of 20 characters (adjust as needed)
+    truncated_ssid=$(truncate_with_ellipsis "$ssid" 14)
+    echo "$wifi_icon $truncated_ssid"
 else
-    # Show "Connected"
     echo "$wifi_icon Connected"
 fi
+

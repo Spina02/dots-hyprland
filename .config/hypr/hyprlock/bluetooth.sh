@@ -1,5 +1,15 @@
 #!/bin/bash
 
+truncate_with_ellipsis() {
+	text=$1
+	max_length=$2
+	if [ ${#text} -gt $max_length ]; then
+		echo "${text:0:$((max_length - 3))}..."
+	else
+		echo "$text"
+	fi
+}
+
 # Path to the Hyprland configuration file
 config_file="$HOME/.config/hypr/hyprlock.conf"
 
@@ -39,9 +49,12 @@ if [ -z "$connected_devices" ]; then
 fi
 
 # Display output based on bt-mode
-if [ "$bt_mode" = "true" ]; then
-    echo "󰂯 $connected_devices"
+if [ "$bt_mode" = true ]; then
+    truncated_devices=$(truncate_with_ellipsis "$connected_devices" 12)
+    echo "󰂯 $truncated_devices"
 else
     echo "󰂯 Connected"
 fi
+
+
 

@@ -20,7 +20,7 @@ if [[ -n "$CITY" && -n "$COUNTRY" ]]; then
     # Imposta una larghezza adatta per l'output (modifica se necessario)
     export COLUMNS=60
     # Usa il parametro ?0n per mostrare solo il meteo attuale in ASCII art senza colori
-    weather_info=$(curl -s "wttr.in/${CITY},${COUNTRY}?T0" 2>/dev/null)
+    weather_info=$(curl -s "wttr.in/${CITY},${COUNTRY}??T0" 2>/dev/null)
     if [[ -n "$weather_info" ]]; then
         echo "$weather_info"
     else
